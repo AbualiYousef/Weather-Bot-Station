@@ -1,8 +1,8 @@
-namespace WeatherBotService.Parsers;
+namespace WeatherBotService.Parsers.Factories;
 
-public class WeatherDataParserFactory
+public class WeatherDataParserFactory: IWeatherDataParserFactory
 {
-    public static IWeatherDataParser GetParser(string inputData)
+    public IWeatherDataParser GetParser(string inputData)
     {
         return inputData switch
         {
