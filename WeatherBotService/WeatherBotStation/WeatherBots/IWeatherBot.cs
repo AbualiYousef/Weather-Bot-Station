@@ -1,6 +1,6 @@
-using WeatherBotService.Data;
+using WeatherBotStation.Data;
 
-namespace WeatherBotService.WeatherBots;
+namespace WeatherBotStation.WeatherBots;
 
 public interface IWeatherBot
 {

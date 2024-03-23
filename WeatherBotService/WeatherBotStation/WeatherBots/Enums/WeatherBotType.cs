@@ -1,4 +1,4 @@
-namespace WeatherBotService.WeatherBots.Enums;
+namespace WeatherBotStation.WeatherBots.Enums;
 
 public enum WeatherBotType
 {

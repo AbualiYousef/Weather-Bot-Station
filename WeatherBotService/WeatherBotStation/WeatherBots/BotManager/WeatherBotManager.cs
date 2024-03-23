@@ -1,9 +1,9 @@
-using WeatherBotService.Configuration;
-using WeatherBotService.Utilities;
-using WeatherBotService.WeatherBots.Enums;
-using WeatherBotService.WeatherBots.Factories;
+using WeatherBotStation.Configuration;
+using WeatherBotStation.Utilities;
+using WeatherBotStation.WeatherBots.Enums;
+using WeatherBotStation.WeatherBots.Factories;
 
-namespace WeatherBotService.WeatherBots.BotManager;
+namespace WeatherBotStation.WeatherBots.BotManager;
 
 public class WeatherBotManager(
     IDictionary<WeatherBotType, BotConfiguration> botConfigurations,
@@ -20,7 +20,7 @@ public class WeatherBotManager(
             if (!(bool)botConfiguration.Value.Enabled!)
                 continue;
             var bot = weatherBotFactory
-                .CreateBot(botConfiguration.Key, botConfiguration.Value.Message!, botConfiguration.Value);
+                .CreateBot(botConfiguration.Value, botConfiguration.Key);
             bots.Add(bot);
         }
 

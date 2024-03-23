@@ -1,18 +1,19 @@
-using WeatherBotService.WeatherBots;
-using WeatherBotService.WeatherBots.BotManager;
+using WeatherBotStation.WeatherBots;
+using WeatherBotStation.WeatherBots.BotManager;
 
-namespace WeatherBotService.Data;
+namespace WeatherBotStation.Data;
 
-public class WeatherDataObservable(IWeatherBotManager manager, WeatherData weatherData) : IWeatherDataObservable
+public class WeatherDataObservable(IWeatherBotManager manager) : IWeatherDataObservable
 {
     private readonly IList<IWeatherBot> _bots = manager.GetBots();
+    private WeatherData _weatherData = null!;
 
     public WeatherData WeatherData
     {
-        get => weatherData;
+        get => _weatherData;
         set
         {
-            weatherData = value;
+            _weatherData = value;
             Notify();
         }
     }
@@ -25,7 +26,7 @@ public class WeatherDataObservable(IWeatherBotManager manager, WeatherData weath
     {
         foreach (var bot in _bots)
         {
-            bot.Activate(weatherData);
+            bot.Activate(_weatherData);
         }
     }
 }

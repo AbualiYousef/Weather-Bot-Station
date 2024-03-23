@@ -1,7 +1,7 @@
-using WeatherBotService.Data;
-using WeatherBotService.Utilities;
+using WeatherBotStation.Data;
+using WeatherBotStation.Utilities;
 
-namespace WeatherBotService.WeatherBots;
+namespace WeatherBotStation.WeatherBots;
 
 public abstract class WeatherBot(string message) : IWeatherBot
 {

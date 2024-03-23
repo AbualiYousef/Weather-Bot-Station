@@ -1,4 +1,4 @@
-namespace WeatherBotService.Data;
+namespace WeatherBotStation.Data;
 
 public class WeatherData
 {

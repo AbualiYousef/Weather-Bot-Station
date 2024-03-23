@@ -1,4 +1,6 @@
-namespace WeatherBotService.Configuration;
+using WeatherBotStation.WeatherBots.Enums;
+
+namespace WeatherBotStation.Configuration;
 
 public class BotConfiguration
 {
@@ -6,7 +8,7 @@ public class BotConfiguration
   
     public double? TemperatureThreshold { get; set; }
   
-    public double? HumidityThreshold { get; set; }
+    public double HumidityThreshold { get; set; }
 
     public string Message { get; set; } = string.Empty;
 }
