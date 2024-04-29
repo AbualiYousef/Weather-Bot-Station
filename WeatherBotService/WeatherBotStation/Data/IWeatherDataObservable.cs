@@ -4,11 +4,7 @@ namespace WeatherBotStation.Data;
 
 public interface IWeatherDataObservable
 {
-    WeatherData WeatherData { get; set; }
-
+    void Process(Task<WeatherData?> data);
     void Attach(WeatherBot bot);
-
     void Detach(WeatherBot bot);
-
-    void Notify();
 }
