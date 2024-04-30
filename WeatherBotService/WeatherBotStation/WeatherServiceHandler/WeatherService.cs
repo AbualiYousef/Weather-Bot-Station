@@ -9,7 +9,7 @@ public class WeatherService(
     IWeatherDataParserFactory weatherDataParserFactory)
     : IWeatherService
 {
-    public Task Run()
+    public async Task Run()
     {
         while (true)
         {
@@ -22,16 +22,16 @@ public class WeatherService(
                 continue;
             }
 
-            ProcessInput(input);
+            await ProcessInput(input);
         }
     }
 
-    private void ProcessInput(string input)
+    private async Task ProcessInput(string input)
     {
         try
         {
             var parser = weatherDataParserFactory.GetParser(input);
-            var weatherData = parser.Parse(input);
+            var weatherData = await parser.Parse(input);
             weatherDataObservable.Process(weatherData);
         }
         catch (Exception e)
