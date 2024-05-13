@@ -51,7 +51,7 @@ public class WeatherDataObservable : IWeatherDataObservable
         }
     }
 
-    public IList<IWeatherBot> GetAllAttachedBots()
+    public IReadOnlyList<IWeatherBot> GetAllAttachedBots()
     {
         return _bots.AsReadOnly();
     }
