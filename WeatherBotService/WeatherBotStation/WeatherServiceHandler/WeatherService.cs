@@ -9,7 +9,7 @@ public class WeatherService(
     IWeatherDataParserFactory weatherDataParserFactory)
     : IWeatherService
 {
-    public async Task Run()
+    public async Task RunAsync()
     {
         while (true)
         {
