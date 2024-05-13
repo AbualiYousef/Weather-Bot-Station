@@ -9,18 +9,17 @@ namespace WeatherBotStation.Test;
 public class WeatherDataObservableTests
 {
     private readonly WeatherDataObservable _weatherDataObservable;
-    private readonly Mock<IWeatherBotManager> _mockManager;
     private readonly Mock<IWeatherBot> _mockBot;
 
     public WeatherDataObservableTests()
     {
         _mockBot = new Mock<IWeatherBot>();
-        _mockManager = new Mock<IWeatherBotManager>();
-        _mockManager
+        Mock<IWeatherBotManager> mockManager = new();
+        mockManager
             .Setup(m => m.GetActivatedBots())
             .Returns(new List<IWeatherBot> { _mockBot.Object });
 
-        _weatherDataObservable = new WeatherDataObservable(_mockManager.Object);
+        _weatherDataObservable = new WeatherDataObservable(mockManager.Object);
     }
 
     [Fact]
