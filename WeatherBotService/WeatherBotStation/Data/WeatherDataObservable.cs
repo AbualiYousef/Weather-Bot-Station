@@ -6,7 +6,6 @@ namespace WeatherBotStation.Data;
 public class WeatherDataObservable : IWeatherDataObservable
 {
     private readonly IList<IWeatherBot> _bots = new List<IWeatherBot>();
-    private WeatherData? _weatherData;
 
     public WeatherDataObservable(IWeatherBotManager manager)
     {
@@ -20,10 +19,9 @@ public class WeatherDataObservable : IWeatherDataObservable
     {
         try
         {
-            _weatherData = data;
             if (data != null)
             {
-                Notify();
+                Notify(data);
             }
         }
         catch (Exception ex)
@@ -45,11 +43,11 @@ public class WeatherDataObservable : IWeatherDataObservable
         _bots.Remove(bot);
     }
 
-    private void Notify()
+    private void Notify(WeatherData data)
     {
         foreach (var bot in _bots)
         {
-            bot.Activate(_weatherData!);
+            bot.Activate(data);
         }
     }
 
