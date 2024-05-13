@@ -10,7 +10,7 @@ public class WeatherBotManager(
     IWeatherBotFactory weatherBotFactory)
     : IWeatherBotManager
 {
-    public IList<IWeatherBot> GetActivatedBots()
+    public IReadOnlyList<IWeatherBot> GetActivatedBots()
     {
         var bots = new List<IWeatherBot>();
         foreach (var botConfiguration in botConfigurations)

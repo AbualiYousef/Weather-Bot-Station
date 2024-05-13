@@ -2,5 +2,5 @@ namespace WeatherBotStation.WeatherBots.BotManager;
 
 public interface IWeatherBotManager
 {
-    IList<IWeatherBot> GetActivatedBots();
+    IReadOnlyList<IWeatherBot> GetActivatedBots();
 }
