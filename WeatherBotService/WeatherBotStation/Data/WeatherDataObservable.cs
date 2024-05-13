@@ -3,30 +3,56 @@ using WeatherBotStation.WeatherBots.BotManager;
 
 namespace WeatherBotStation.Data;
 
-public class WeatherDataObservable(IWeatherBotManager manager) : IWeatherDataObservable
+public class WeatherDataObservable : IWeatherDataObservable
 {
-    private readonly IList<IWeatherBot> _bots = manager.GetBots();
-    private WeatherData _weatherData = null!;
+    private readonly IList<IWeatherBot> _bots = new List<IWeatherBot>();
 
-    public WeatherData WeatherData
+    public WeatherDataObservable(IWeatherBotManager manager)
     {
-        get => _weatherData;
-        set
+        foreach (var bot in manager.GetActivatedBots())
         {
-            _weatherData = value;
-            Notify();
+            Attach(bot);
         }
     }
 
-    public void Attach(WeatherBot bot) => _bots.Add(bot);
+    public void Process(WeatherData? data)
+    {
+        try
+        {
+            if (data != null)
+            {
+                Notify(data);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error processing weather data: {ex.Message}");
+        }
+    }
 
-    public void Detach(WeatherBot bot) => _bots.Remove(bot);
+    public void Attach(IWeatherBot bot)
+    {
+        if (!_bots.Contains(bot))
+        {
+            _bots.Add(bot);
+        }
+    }
 
-    public void Notify()
+    public void Detach(IWeatherBot bot)
+    {
+        _bots.Remove(bot);
+    }
+
+    private void Notify(WeatherData data)
     {
         foreach (var bot in _bots)
         {
-            bot.Activate(_weatherData);
+            bot.Activate(data);
         }
+    }
+
+    public IReadOnlyList<IWeatherBot> GetAllAttachedBots()
+    {
+        return _bots.AsReadOnly();
     }
 }

@@ -29,4 +29,4 @@ var serviceProvider = new ServiceCollection()
 var app = serviceProvider
     .BuildServiceProvider()
     .GetRequiredService<IWeatherService>();
-await app.Run();
+await app.RunAsync();

@@ -4,11 +4,12 @@ using WeatherBotStation.Utilities;
 
 namespace WeatherBotStation.WeatherServiceHandler;
 
-public class WeatherService(IWeatherDataObservable weatherDataObservable
-    ,  IWeatherDataParserFactory weatherDataParserFactory)
+public class WeatherService(
+    IWeatherDataObservable weatherDataObservable,
+    IWeatherDataParserFactory weatherDataParserFactory)
     : IWeatherService
 {
-    public Task Run()
+    public async Task RunAsync()
     {
         while (true)
         {
@@ -21,17 +22,17 @@ public class WeatherService(IWeatherDataObservable weatherDataObservable
                 continue;
             }
 
-            ProcessInput(input);
+            await ProcessInput(input);
         }
     }
-    
-    private void ProcessInput(string input)
+
+    private async Task ProcessInput(string input)
     {
         try
         {
             var parser = weatherDataParserFactory.GetParser(input);
-            var weatherData = parser.Parse(input);
-            weatherDataObservable.WeatherData= weatherData.Result!;
+            var weatherData = await parser.ParseAsync(input);
+            weatherDataObservable.Process(weatherData);
         }
         catch (Exception e)
         {
