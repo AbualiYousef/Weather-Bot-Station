@@ -31,7 +31,7 @@ public class WeatherService(
         try
         {
             var parser = weatherDataParserFactory.GetParser(input);
-            var weatherData = await parser.Parse(input);
+            var weatherData = await parser.ParseAsync(input);
             weatherDataObservable.Process(weatherData);
         }
         catch (Exception e)

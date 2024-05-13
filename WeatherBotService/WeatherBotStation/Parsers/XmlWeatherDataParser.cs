@@ -5,7 +5,7 @@ namespace WeatherBotStation.Parsers;
 
 public class XmlWeatherDataParser<TInput> :IWeatherDataParser<TInput>
 {
-    public async Task<TInput?> Parse(string input)
+    public async Task<TInput?> ParseAsync(string input)
     {
         return await Task.Run(() =>
         {

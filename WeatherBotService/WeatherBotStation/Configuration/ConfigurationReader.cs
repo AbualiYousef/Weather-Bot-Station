@@ -11,7 +11,7 @@ public class ConfigurationReader
     public async Task<IDictionary<WeatherBotType, BotConfiguration>> Read(string filePath)
     {
         var fileContent = await File.ReadAllTextAsync(filePath);
-        var parsedData = await weatherDataParser.Parse(fileContent) ??
+        var parsedData = await weatherDataParser.ParseAsync(fileContent) ??
                          throw new Exception(StandardMessages.InvalidConfigurationFile);
         return parsedData;
     }

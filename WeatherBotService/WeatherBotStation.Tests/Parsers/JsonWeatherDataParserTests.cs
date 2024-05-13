@@ -18,7 +18,7 @@ public class JsonWeatherDataParserTests
 
         var json = JsonConvert.SerializeObject(weatherData);
 
-        var result = await _parser.Parse(json);
+        var result = await _parser.ParseAsync(json);
 
         result.Should().NotBeNull();
         result.Should().BeEquivalentTo(weatherData);
@@ -30,7 +30,7 @@ public class JsonWeatherDataParserTests
     {
         var invalidJson = _fixture.Create<string>();
 
-        var act = async () => { await _parser.Parse(invalidJson); };
+        var act = async () => { await _parser.ParseAsync(invalidJson); };
 
         await act.Should().ThrowAsync<JsonReaderException>();
     }
@@ -39,7 +39,7 @@ public class JsonWeatherDataParserTests
     public async Task Parse_NullInput_ShouldThrowArgumentNullException()
     {
         string? nullJson = null;
-        Func<Task> act = async () => { await _parser.Parse(nullJson); };
+        Func<Task> act = async () => { await _parser.ParseAsync(nullJson); };
 
         await act.Should().ThrowAsync<ArgumentNullException>()
             .WithMessage("Value cannot be null. (Parameter 'value')");    
@@ -48,7 +48,7 @@ public class JsonWeatherDataParserTests
     [Fact]
     public async Task Parse_EmptyInput_ShouldReturnNull()
     {
-        var result = await _parser.Parse(string.Empty);
+        var result = await _parser.ParseAsync(string.Empty);
 
         result.Should().BeNull();
     }
@@ -58,7 +58,7 @@ public class JsonWeatherDataParserTests
     {
         var jsonWithNulls = "{\"Temperature\": null, \"Humidity\": null}";
 
-        var result = await _parser.Parse(jsonWithNulls);
+        var result = await _parser.ParseAsync(jsonWithNulls);
 
         result.Should().NotBeNull();
         result.Temperature.Should().BeNull();
@@ -70,7 +70,7 @@ public class JsonWeatherDataParserTests
     {
         var jsonWithNegativeValues = "{\"Temperature\": -5.5, \"Humidity\": -10.0}";
 
-        var result = await _parser.Parse(jsonWithNegativeValues);
+        var result = await _parser.ParseAsync(jsonWithNegativeValues);
 
         result.Should().NotBeNull();
         result.Temperature.Should().Be(-5.5);
@@ -82,7 +82,7 @@ public class JsonWeatherDataParserTests
     {
         var jsonWithStrings = "{\"Temperature\": \"hot\", \"Humidity\": \"high\"}";
 
-        Func<Task> act = async () => { await _parser.Parse(jsonWithStrings); };
+        Func<Task> act = async () => { await _parser.ParseAsync(jsonWithStrings); };
 
         await act.Should().ThrowAsync<JsonReaderException>();
     }
@@ -92,7 +92,7 @@ public class JsonWeatherDataParserTests
     {
         var jsonWithExtra = "{\"Temperature\": 20.0, \"Humidity\": 80.0, \"Pressure\": 1024}";
 
-        var result = await _parser.Parse(jsonWithExtra);
+        var result = await _parser.ParseAsync(jsonWithExtra);
 
         result.Should().NotBeNull();
         result.Temperature.Should().Be(20.0);
